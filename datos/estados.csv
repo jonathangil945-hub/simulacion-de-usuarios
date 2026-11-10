@@ -1,0 +1,44 @@
+﻿Código;Nombre;Descripción;Tipo;Sección del sitio
+S0;Ingreso al sitio;La persona abre el navegador y carga el sitio desde Google, redes sociales o un enlace compartido.;inicial;Navegador
+S1;Página de Inicio;Ve el banner 'Historia, fe y patrimonio de Tunja' y los accesos a La Iglesia y al Museo Virtual.;intermedio;/
+S2;Abrir menú de navegación;Abre el menú principal (en celular, el menú desplegable) para elegir una sección.;intermedio;Menú
+S3;Usar el buscador;Escribe en la caja 'Buscar en el sitio...' de la barra superior.;intermedio;Buscador
+S4;Resultados de búsqueda;Revisa lo que devolvió la búsqueda y decide a qué sección ir.;intermedio;Buscador
+S5;Cambiar idioma;Abre el selector de idioma 'Español' buscando otra lengua (visitantes extranjeros).;intermedio;Selector de idioma
+S6;La Iglesia;Lee la presentación institucional: vida espiritual, patrimonio cultural y vida comunitaria.;intermedio;/la-iglesia
+S7;Historia - línea de tiempo;Entra a la sección Historia con la cronología de la Iglesia.;intermedio;/historia
+S8;Leer cronología;Recorre los siglos XVI al XX y 'Patrimonio vivo' haciendo scroll en la línea de tiempo.;intermedio;/historia
+S9;Patrimonio - categorías;Explora las categorías Arquitectura, Escultura, Pintura y Retablos.;intermedio;/patrimonio
+S10;Catálogo de piezas;Revisa el catálogo: Retablo Mayor, Púlpito, Virgen del Rosario, Serie pictórica, etc.;intermedio;/patrimonio
+S11;Ver detalle de pieza;Pulsa 'VER DETALLE →' sobre una pieza patrimonial.;intermedio;/patrimonio
+S12;Capilla del Rosario;Lee sobre la arquitectura, el arte y la espiritualidad de la Capilla del Rosario.;intermedio;/capilla-del-rosario
+S13;Museo Virtual;Entra a la página del Museo Virtual de la Capilla del Rosario.;intermedio;/museo-virtual
+S14;Iniciar recorrido virtual;Pulsa el botón 'INICIAR RECORRIDO VIRTUAL' esperando la experiencia 3D.;intermedio;/museo-virtual
+S15;Usar controles del recorrido;Usa las flechas (← ↑ ↓ →) y el zoom (+ –) de la interfaz de referencia.;intermedio;/museo-virtual
+S16;Puntos de interés;Revisa los puntos de interés: Retablo Mayor, Púlpito, Virgen del Rosario, Pintura mural.;intermedio;/museo-virtual
+S17;Galería;Abre la galería de imágenes de la Iglesia, su arte y arquitectura.;intermedio;/galeria
+S18;Filtrar galería;Usa los filtros Todas, Iglesia, Capilla del Rosario, Arquitectura, Arte o Patrimonio.;intermedio;/galeria
+S19;Abrir imagen ampliada;Abre una fotografía (p. ej. 'Fachada principal') para verla en grande.;intermedio;/galeria
+S20;Cerrar imagen ampliada;Cierra el visor de imagen y vuelve a la cuadrícula de la galería.;intermedio;/galeria
+S21;Actualidad;Entra a 'Noticias y eventos' y ve las últimas noticias por categoría.;intermedio;/actualidad
+S22;Leer noticia;Pulsa 'LEER MÁS' y abre el detalle de una noticia.;intermedio;/actualidad/noticia-ejemplo
+S23;Agenda;Abre el calendario de actividades (celebraciones litúrgicas, eventos culturales, museo).;intermedio;/agenda
+S24;Filtrar eventos;Usa los filtros Todos, Litúrgica, Cultural o Museo de la agenda.;intermedio;/agenda
+S25;Visita - horarios y ubicación;Consulta ubicación, horarios, accesibilidad y recomendaciones para visitar.;intermedio;/visita
+S26;Contacto;Abre la página de contacto con formulario, dirección, teléfono y correo.;intermedio;/contacto
+S27;Llenar formulario;Escribe nombre, correo electrónico, asunto y mensaje.;intermedio;/contacto
+S28;Formulario con errores;Aparecen errores de validación (campo vacío o correo inválido) y debe corregir.;intermedio;/contacto
+S29;Enviar mensaje;Pulsa el botón 'ENVIAR MENSAJE'.;intermedio;/contacto
+S30;Volver atrás / recargar;Usa el botón atrás del navegador o recarga la página actual.;intermedio;Navegador
+S31;Encuentra contenido 'por confirmar';Lee textos como 'Información por confirmar' o 'Contenido en construcción' y duda si seguir.;intermedio;Varias secciones
+S32;Pie de página / enlaces legales;Baja al pie de página: redes sociales, privacidad, tratamiento de datos, aviso legal.;intermedio;Footer
+S33;Error 404 - página no encontrada;Al abrir o recargar una sub-página directamente (p. ej. /historia) Netlify responde 'Page not found'.;error;Netlify 404
+S34;Error - recorrido 3D no disponible;El botón del recorrido virtual no abre ninguna experiencia ('Experiencia 3D interactiva - Próximamente').;error;/museo-virtual
+S35;Error - el mensaje no se envía;El formulario es solo visual: el mensaje no llega y el usuario no recibe confirmación.;error;/contacto
+S36;Éxito - planificó su visita;Obtiene la información necesaria y decide visitar la Iglesia en el centro histórico de Tunja.;final exitoso;Resultado
+S37;Éxito - mensaje enviado y confirmado;El mensaje de contacto se envía y recibe confirmación en pantalla.;final exitoso;Resultado
+S38;Éxito - exploró el patrimonio;Completa la exploración de historia, patrimonio, galería o museo virtual que buscaba.;final exitoso;Resultado
+S39;Éxito - se informó de eventos;Encuentra la celebración o noticia que buscaba en Agenda o Actualidad.;final exitoso;Resultado
+S40;Abandono - cierra la pestaña;Cierra la pestaña o se va a otro sitio sin cumplir su objetivo.;final negativo;Resultado
+S41;Abandono - inactividad;Deja la página abierta sin interactuar hasta que la sesión se pierde.;final negativo;Resultado
+S42;Seguimiento pendiente;Queda esperando: respuesta al mensaje, fecha 'por confirmar' o lanzamiento del museo. Volverá luego.;seguimiento;Resultado

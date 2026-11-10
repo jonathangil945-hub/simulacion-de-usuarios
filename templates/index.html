@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4a1520">
+  <title>Simulador de Márkov · Iglesia de Santo Domingo</title>
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/estilos.css') }}">
+</head>
+<body>
+  <header class="cabecera">
+    <div class="cabecera__in">
+      <div class="marca">
+        <span class="marca__cruz" aria-hidden="true">✝</span>
+        <div>
+          <p class="marca__sup">Proyecto Integrador · Simulación</p>
+          <h1 class="marca__titulo">Navegación en la web de la Iglesia de Santo Domingo</h1>
+          <p class="marca__sub">Cadenas de Márkov aplicadas a <a href="https://museosantodomingo.netlify.app/" target="_blank" rel="noopener">museosantodomingo.netlify.app</a></p>
+        </div>
+      </div>
+      <dl class="resumen" id="resumenModelo">
+        <div><dt>Estados</dt><dd id="rEstados">—</dd></div>
+        <div><dt>Recorridos</dt><dd id="rRecorridos">—</dd></div>
+        <div><dt>Tipos de usuario</dt><dd id="rTipos">—</dd></div>
+      </dl>
+    </div>
+    <nav class="pestanas" role="tablist" aria-label="Secciones">
+      <button class="pestana activa" data-vista="simular" role="tab"><span>▶</span> Simulación</button>
+      <button class="pestana" data-vista="estados" role="tab"><span>◉</span> Estados</button>
+      <button class="pestana" data-vista="recorridos" role="tab"><span>↝</span> Recorridos</button>
+      <button class="pestana" data-vista="matrices" role="tab"><span>▦</span> Matrices</button>
+      <button class="pestana" data-vista="mejora" role="tab"><span>✦</span> Mejora y análisis</button>
+    </nav>
+  </header>
+
+  <main class="contenedor">
+
+    <!-- ============================ SIMULACIÓN ============================ -->
+    <section class="vista activa" id="vista-simular">
+      <div class="panel panel--control">
+        <div class="panel__cab">
+          <h2>Configurar simulación</h2>
+          <p>Elige cuántas personas navegarán el sitio y cuántos pasos puede dar cada una como máximo.</p>
+        </div>
+        <form id="formSim" class="controles" autocomplete="off">
+          <div class="control">
+            <label for="inUsuarios">Número de usuarios <small>({{ min_u }} a {{ "{:,}".format(max_u).replace(",", ".") }})</small></label>
+            <div class="control__fila">
+              <input type="range" id="rgUsuarios" min="0" max="1000" step="1" aria-label="Usuarios (deslizador)">
+              <input type="number" id="inUsuarios" min="{{ min_u }}" max="{{ max_u }}" value="1000" inputmode="numeric" required>
+            </div>
+            <div class="chips" id="chipsUsuarios">
+              <button type="button" data-v="10">10</button>
+              <button type="button" data-v="100">100</button>
+              <button type="button" data-v="1000">1.000</button>
+              <button type="button" data-v="5000">5.000</button>
+              <button type="button" data-v="10000">10.000</button>
+            </div>
+          </div>
+          <div class="control">
+            <label for="inPasos">Pasos máximos por usuario <small>({{ min_p }} a {{ max_p }})</small></label>
+            <div class="control__fila">
+              <input type="range" id="rgPasos" min="{{ min_p }}" max="{{ max_p }}" value="50" aria-label="Pasos (deslizador)">
+              <input type="number" id="inPasos" min="{{ min_p }}" max="{{ max_p }}" value="50" inputmode="numeric" required>
+            </div>
+            <p class="ayuda">Si un usuario llega al límite sin terminar, se cuenta como “sin terminar”.</p>
+          </div>
+          <div class="control">
+            <label for="inSemilla">Semilla aleatoria <small>(opcional)</small></label>
+            <div class="control__fila">
+              <input type="number" id="inSemilla" placeholder="Aleatoria" inputmode="numeric">
+              <button type="button" class="btn btn--suave" id="btnSemilla" title="Usar la semilla del informe">2026</button>
+            </div>
+            <p class="ayuda">Con la misma semilla se repiten exactamente los mismos resultados.</p>
+          </div>
+          <div class="control control--accion">
+            <button type="submit" class="btn btn--primario btn--grande" id="btnSimular">
+              <span class="btn__icono">▶</span> Ejecutar simulación
+            </button>
+            <p class="error" id="errSim" role="alert"></p>
+          </div>
+        </form>
+      </div>
+
+      <div id="resultados" class="resultados oculto">
+        <div class="kpis" id="kpis"></div>
+
+        <div class="rejilla rejilla--2">
+          <article class="panel">
+            <div class="panel__cab"><h3>Resultado final de los usuarios</h3><p id="txtMasFrecuente"></p></div>
+            <div class="grafica grafica--dona" id="gDona"></div>
+          </article>
+          <article class="panel">
+            <div class="panel__cab"><h3>Simulación en vivo</h3><p>Cada cuadro es un usuario, coloreado por su resultado.</p></div>
+            <canvas id="mosaico" class="mosaico" aria-label="Mosaico de usuarios simulados"></canvas>
+            <div class="leyenda" id="leyendaMosaico"></div>
+          </article>
+        </div>
+
+        <article class="panel panel--critico" id="panelCritico"></article>
+
+        <div class="rejilla rejilla--2">
+          <article class="panel">
+            <div class="panel__cab"><h3>¿Dónde se pierden los usuarios?</h3><p>Estado previo al abandono o al error (top 10).</p></div>
+            <div class="grafica" id="gPerdidas"></div>
+          </article>
+          <article class="panel">
+            <div class="panel__cab"><h3>Estados finales alcanzados</h3><p>Usuarios por estado final.</p></div>
+            <div class="grafica" id="gFinales"></div>
+          </article>
+        </div>
+
+        <article class="panel">
+          <div class="panel__cab"><h3>Distribución de pasos por usuario</h3><p id="txtPasos"></p></div>
+          <div class="grafica" id="gHist"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__cab panel__cab--fila">
+            <div><h3>Vista previa de usuarios simulados</h3><p>Recorrido completo y resultado de los primeros usuarios.</p></div>
+            <div class="filtros" id="filtroPrevia"></div>
+          </div>
+          <ol class="lista-caminos" id="listaPrevia"></ol>
+          <div class="acciones">
+            <a class="btn btn--suave" id="lnkCsvSim" href="#">⬇ Descargar todos los recorridos simulados (CSV)</a>
+          </div>
+        </article>
+      </div>
+
+      <div id="vacio" class="vacio">
+        <div class="vacio__icono">✝</div>
+        <p>Configura los parámetros y pulsa <strong>Ejecutar simulación</strong>.</p>
+      </div>
+    </section>
+
+    <!-- ============================ ESTADOS ============================ -->
+    <section class="vista" id="vista-estados">
+      <div class="panel">
+        <div class="panel__cab panel__cab--fila">
+          <div><h2>Estados del modelo</h2><p>Construidos a partir de las secciones reales del sitio.</p></div>
+          <a class="btn btn--suave" href="/exportar/estados.csv">⬇ CSV</a>
+        </div>
+        <div class="barra-filtros">
+          <input type="search" id="buscaEstado" placeholder="Buscar estado…" aria-label="Buscar estado">
+          <div class="filtros" id="filtroTipo"></div>
+        </div>
+        <div class="tabla-envoltura">
+          <table class="tabla tabla--estados">
+            <thead><tr><th>Código</th><th>Nombre</th><th>Descripción</th><th>Tipo</th><th>Sección del sitio</th></tr></thead>
+            <tbody id="tbEstados"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ RECORRIDOS ============================ -->
+    <section class="vista" id="vista-recorridos">
+      <div class="panel">
+        <div class="panel__cab panel__cab--fila">
+          <div><h2>Recorridos base de usuarios</h2><p id="txtRecorridos"></p></div>
+          <a class="btn btn--suave" href="/exportar/recorridos.csv">⬇ CSV</a>
+        </div>
+        <div class="barra-filtros">
+          <select id="selTipoUsuario" aria-label="Tipo de usuario"></select>
+          <div class="filtros" id="filtroResRec"></div>
+        </div>
+        <div class="rejilla rejilla--tarjetas" id="gridRecorridos"></div>
+      </div>
+    </section>
+
+    <!-- ============================ MATRICES ============================ -->
+    <section class="vista" id="vista-matrices">
+      <div class="panel">
+        <div class="panel__cab panel__cab--fila">
+          <div><h2>Matrices de la cadena de Márkov</h2><p id="txtMatriz"></p></div>
+          <div class="segmentado" role="group" aria-label="Tipo de matriz">
+            <button class="activo" data-m="conteos">Conteos</button>
+            <button data-m="probabilidades">Probabilidades</button>
+          </div>
+        </div>
+        <div class="info-celda" id="infoCelda">Toca o pasa el cursor sobre una celda para ver la transición.</div>
+        <div class="matriz-envoltura" id="matrizEnv"><table class="matriz" id="tablaMatriz"></table></div>
+        <div class="acciones">
+          <label class="check"><input type="checkbox" id="chkCeros"> Ocultar ceros</label>
+          <a class="btn btn--suave" href="/exportar/conteos.csv">⬇ Matriz de conteos (CSV)</a>
+          <a class="btn btn--suave" href="/exportar/probabilidades.csv">⬇ Matriz de probabilidades (CSV)</a>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__cab panel__cab--fila">
+          <div><h3>Explorar la fila de un estado</h3><p>Probabilidad de ir a cada destino desde el estado elegido.</p></div>
+          <select id="selFila" aria-label="Estado de origen"></select>
+        </div>
+        <div class="grafica" id="gFila"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__cab"><h3>Comprobación teórica (matriz fundamental)</h3>
+          <p>Con N = (I − Q)<sup>−1</sup> se calcula la probabilidad exacta de terminar en cada resultado partiendo de S0, sin límite de pasos.</p></div>
+        <div class="kpis kpis--mini" id="kpisTeorico"></div>
+      </div>
+    </section>
+
+    <!-- ============================ MEJORA ============================ -->
+    <section class="vista" id="vista-mejora">
+      <div class="panel panel--control">
+        <div class="panel__cab"><h2>Interfaz de mejora</h2>
+          <p>Elige el estado que quieres mejorar (por defecto, el estado crítico detectado) y cuánto se reduce su abandono/error.</p></div>
+        <form id="formMejora" class="controles">
+          <div class="control">
+            <label for="selMejora">Estado a mejorar</label>
+            <select id="selMejora"></select>
+          </div>
+          <div class="control">
+            <label for="rgReduccion">Reducción de abandono y error en ese estado: <strong id="lblReduccion">50 %</strong></label>
+            <input type="range" id="rgReduccion" min="0" max="100" step="5" value="50">
+          </div>
+          <div class="control">
+            <label for="selModo">¿A dónde van los usuarios recuperados?</label>
+            <select id="selModo">
+              <option value="exito">Al objetivo (éxito o siguiente paso útil)</option>
+              <option value="proporcional">Proporcional a los demás destinos</option>
+            </select>
+          </div>
+          <div class="control control--accion">
+            <button type="submit" class="btn btn--primario btn--grande">✦ Simular con la mejora</button>
+            <p class="error" id="errMejora" role="alert"></p>
+          </div>
+        </form>
+        <div class="recomendacion" id="recoMejora"></div>
+      </div>
+
+      <div id="resMejora" class="oculto">
+        <div class="rejilla rejilla--2">
+          <article class="panel">
+            <div class="panel__cab"><h3>Antes vs. después (simulación)</h3><p id="txtMejoraParams"></p></div>
+            <div class="grafica" id="gComparar"></div>
+          </article>
+          <article class="panel">
+            <div class="panel__cab"><h3>Cambio en los porcentajes</h3><p>Simulado y teórico (matriz fundamental).</p></div>
+            <div id="deltas" class="deltas"></div>
+          </article>
+        </div>
+        <article class="panel">
+          <div class="panel__cab"><h3>Fila modificada de la matriz de transición</h3><p id="txtFila"></p></div>
+          <div class="tabla-envoltura"><table class="tabla"><thead><tr><th>Destino</th><th>Antes</th><th>Después</th><th>Cambio</th></tr></thead><tbody id="tbFila"></tbody></table></div>
+        </article>
+      </div>
+
+      <article class="panel">
+        <div class="panel__cab"><h2>Respuestas a las preguntas de análisis</h2>
+          <p>Se generan con los datos de la última simulación y de la última mejora.</p></div>
+        <div id="respuestas" class="respuestas"><p class="ayuda">Ejecuta primero una simulación.</p></div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Proyecto Integrador · Simulación con cadenas de Márkov · Iglesia de Santo Domingo, Tunja – Boyacá</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip" role="tooltip"></div>
+  <div class="cargando oculto" id="cargando"><div class="cargando__spinner"></div><p>Simulando usuarios…</p></div>
+
+  <script src="{{ url_for('static', filename='js/graficas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

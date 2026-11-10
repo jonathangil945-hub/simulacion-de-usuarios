@@ -1,0 +1,75 @@
+﻿#;Tipo de usuario;Descripción;Recorrido;Pasos;Resultado
+1;Turista;Va directo a Visita y aunque ve datos por confirmar decide ir;S0 → S1 → S25 → S31 → S36;4;Éxito
+2;Turista;Usa el menú para ir a Visita y planifica;S0 → S1 → S2 → S25 → S36;4;Éxito
+3;Turista;Horarios 'por confirmar': se va;S0 → S1 → S25 → S31 → S40;4;Abandono
+4;Turista;Explora el museo virtual antes de visitar;S0 → S1 → S2 → S25 → S13 → S15 → S16 → S36;7;Éxito
+5;Turista;Revisa patrimonio para saber qué ver;S0 → S1 → S25 → S9 → S10 → S11 → S31 → S36;7;Éxito
+6;Turista;Busca 'horarios' en el buscador;S0 → S1 → S3 → S4 → S25 → S36;5;Éxito
+7;Turista;Pregunta horarios por el formulario y queda esperando;S0 → S1 → S25 → S31 → S26 → S27 → S29 → S42;7;Seguimiento pendiente
+8;Turista;Duda, vuelve a inicio y termina cerrando;S0 → S1 → S2 → S25 → S31 → S30 → S1 → S40;7;Abandono
+9;Turista;Extranjero: intenta cambiar idioma y planifica;S0 → S5 → S1 → S2 → S25 → S36;5;Éxito
+10;Turista;Extranjero: no hay otro idioma y abandona;S0 → S5 → S1 → S25 → S31 → S40;5;Abandono
+11;Turista;Cruza Visita con Agenda;S0 → S1 → S25 → S23 → S36;4;Éxito
+12;Turista;Lee La Iglesia y luego Visita;S0 → S1 → S6 → S25 → S36;4;Éxito
+13;Turista;Mira fotos antes de decidir;S0 → S1 → S2 → S25 → S17 → S19 → S20 → S36;7;Éxito
+14;Feligrés;Busca horario de misa: 'por confirmar';S0 → S1 → S23 → S24 → S31 → S42;5;Seguimiento pendiente
+15;Feligrés;Filtra eventos litúrgicos y encuentra uno;S0 → S1 → S2 → S23 → S24 → S39;5;Éxito
+16;Feligrés;Agenda sin fechas: abandona;S0 → S1 → S23 → S31 → S40;4;Abandono
+17;Feligrés;Lee noticia en preparación y queda pendiente;S0 → S1 → S21 → S22 → S31 → S42;5;Seguimiento pendiente
+18;Feligrés;Lee una noticia de la comunidad;S0 → S1 → S21 → S22 → S39;4;Éxito
+19;Feligrés;Filtra agenda y luego mira cómo llegar;S0 → S1 → S2 → S23 → S24 → S25 → S36;6;Éxito
+20;Feligrés;Desde La Iglesia va a la agenda;S0 → S1 → S6 → S23 → S39;4;Éxito
+21;Feligrés;Noticias vacías, vuelve y prueba la agenda;S0 → S1 → S21 → S31 → S30 → S23 → S24 → S42;7;Seguimiento pendiente
+22;Feligrés;Pregunta por un evento, corrige el formulario;S0 → S1 → S23 → S26 → S27 → S28 → S27 → S29 → S42;8;Seguimiento pendiente
+23;Feligrés;Lee noticia, vuelve, se aburre;S0 → S1 → S2 → S21 → S22 → S30 → S21 → S40;7;Abandono
+24;Estudiante;Historia con fechas por confirmar: se va;S0 → S1 → S2 → S7 → S8 → S31 → S40;6;Abandono
+25;Estudiante;Historia y Capilla del Rosario;S0 → S1 → S7 → S8 → S12 → S38;5;Éxito
+26;Estudiante;Pide fuentes por el formulario: no se envía;S0 → S1 → S2 → S7 → S8 → S31 → S26 → S27 → S29 → S35;9;Error
+27;Estudiante;Busca 'historia' en el buscador;S0 → S1 → S3 → S4 → S7 → S8 → S38;6;Éxito
+28;Estudiante;Revisa varias piezas del catálogo;S0 → S1 → S9 → S10 → S11 → S31 → S30 → S10 → S11 → S38;9;Éxito
+29;Estudiante;Va del menú al detalle de una pieza;S0 → S1 → S2 → S9 → S10 → S11 → S38;6;Éxito
+30;Estudiante;Lee mucho y se queda inactivo;S0 → S1 → S7 → S8 → S9 → S10 → S11 → S31 → S41;8;Abandono
+31;Estudiante;Empieza por La Iglesia;S0 → S1 → S6 → S7 → S8 → S38;5;Éxito
+32;Estudiante;Búsqueda sin resultados útiles;S0 → S1 → S3 → S4 → S31 → S40;5;Abandono
+33;Estudiante;Capilla, historia y pie de página;S0 → S1 → S2 → S12 → S7 → S8 → S32 → S40;7;Abandono
+34;Estudiante;Recarga /historia y aparece el 404;S0 → S1 → S7 → S31 → S30 → S33;5;Error
+35;Estudiante;Quiere escribir pero el formulario falla;S0 → S1 → S9 → S10 → S11 → S31 → S26 → S27 → S28 → S41;9;Abandono
+36;Estudiante;Recorrido completo hasta el museo;S0 → S1 → S2 → S7 → S8 → S12 → S13 → S15 → S16 → S38;9;Éxito
+37;Arte y fotografía;Filtra y amplía una foto;S0 → S1 → S17 → S18 → S19 → S20 → S38;6;Éxito
+38;Arte y fotografía;Abre y cierra varias fotos;S0 → S1 → S2 → S17 → S19 → S20 → S19 → S20 → S38;8;Éxito
+39;Arte y fotografía;Abre una foto y se distrae;S0 → S1 → S17 → S19 → S41;4;Abandono
+40;Arte y fotografía;Usa dos filtros distintos;S0 → S1 → S17 → S18 → S19 → S20 → S18 → S19 → S20 → S38;9;Éxito
+41;Arte y fotografía;Imágenes de referencia: abandona;S0 → S1 → S2 → S17 → S18 → S19 → S31 → S40;7;Abandono
+42;Arte y fotografía;De patrimonio a la galería;S0 → S1 → S9 → S17 → S19 → S20 → S38;6;Éxito
+43;Arte y fotografía;De la galería a la Capilla;S0 → S1 → S17 → S19 → S20 → S12 → S38;6;Éxito
+44;Arte y fotografía;Recarga la galería: error 404;S0 → S1 → S2 → S17 → S18 → S19 → S20 → S30 → S33;8;Error
+45;Arte y fotografía;Galería y catálogo patrimonial;S0 → S1 → S17 → S18 → S19 → S20 → S9 → S10 → S11 → S38;9;Éxito
+46;Arte y fotografía;Ve una foto y cierra;S0 → S1 → S17 → S19 → S20 → S40;5;Abandono
+47;Museo virtual;Pulsa iniciar recorrido: no hay 3D;S0 → S1 → S13 → S14 → S34;4;Error
+48;Museo virtual;Desde el menú al recorrido: no hay 3D;S0 → S1 → S2 → S13 → S14 → S34;5;Error
+49;Museo virtual;Usa la interfaz de referencia;S0 → S1 → S13 → S15 → S16 → S38;5;Éxito
+50;Museo virtual;Desde la Capilla al recorrido;S0 → S1 → S12 → S13 → S14 → S34;5;Error
+51;Museo virtual;Botón sin 3D, pero usa la vista previa;S0 → S1 → S13 → S14 → S15 → S16 → S38;6;Éxito
+52;Museo virtual;Puntos 'por confirmar': abandona;S0 → S1 → S13 → S15 → S16 → S31 → S40;6;Abandono
+53;Museo virtual;Vuelve atrás y usa los controles;S0 → S1 → S2 → S13 → S14 → S30 → S13 → S15 → S16 → S38;9;Éxito
+54;Museo virtual;Lee los avances del proyecto y espera;S0 → S1 → S13 → S14 → S31 → S21 → S22 → S42;7;Seguimiento pendiente
+55;Museo virtual;Capilla, museo y error del recorrido;S0 → S1 → S2 → S12 → S13 → S14 → S34;6;Error
+56;Museo virtual;Mueve los controles y se queda quieto;S0 → S1 → S13 → S15 → S41;4;Abandono
+57;Contacto;Envía mensaje y ve confirmación;S0 → S1 → S26 → S27 → S29 → S37;5;Éxito
+58;Contacto;Corrige el correo y envía;S0 → S1 → S2 → S26 → S27 → S28 → S27 → S29 → S37;8;Éxito
+59;Contacto;Envía pero no llega;S0 → S1 → S26 → S27 → S29 → S35;5;Error
+60;Contacto;Error de validación y abandona;S0 → S1 → S26 → S27 → S28 → S40;5;Abandono
+61;Contacto;Envía y queda esperando respuesta;S0 → S1 → S2 → S26 → S27 → S29 → S42;6;Seguimiento pendiente
+62;Contacto;Teléfono y correo por confirmar;S0 → S1 → S26 → S31 → S40;4;Abandono
+63;Contacto;"Llega desde el pie de página; falla el envío";S0 → S1 → S32 → S26 → S27 → S29 → S35;6;Error
+64;Contacto;Dos intentos fallidos de validación;S0 → S1 → S26 → S27 → S28 → S27 → S28 → S40;7;Abandono
+65;Visitante de paso;Ve el inicio y se va;S0 → S1 → S40;2;Abandono
+66;Visitante de paso;La página carga y cierra de inmediato;S0 → S40;1;Abandono
+67;Visitante de paso;Abre el menú, lee La Iglesia y se va;S0 → S1 → S2 → S6 → S40;4;Abandono
+68;Visitante de paso;Baja al pie de página y se va;S0 → S1 → S32 → S40;3;Abandono
+69;Visitante de paso;Prueba el idioma y se va;S0 → S1 → S5 → S1 → S40;4;Abandono
+70;Visitante de paso;Busca algo, vuelve y se va;S0 → S1 → S3 → S4 → S30 → S1 → S40;6;Abandono
+71;Visitante de paso;Deja la pestaña abierta;S0 → S1 → S41;2;Abandono
+72;Enlace compartido;Abre un enlace directo a una sub-página: 404;S0 → S33;1;Error
+73;Enlace compartido;Lee noticia, recarga y aparece 404;S0 → S1 → S21 → S22 → S30 → S33;5;Error
+74;Enlace compartido;Recarga la Capilla del Rosario: 404;S0 → S1 → S12 → S30 → S33;4;Error
